@@ -1,4 +1,5 @@
 'use client'
+<<<<<<< HEAD
 // ↑ Tells Next.js this file runs in the browser, not on the server.
 // Required because we use React hooks (useState) and browser events (onClick).
 
@@ -39,10 +40,28 @@ export default function Page() {
   const signUp = async () => {
 
     // Call Supabase Auth API to create a new user
+=======
+
+import { useState } from 'react'
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
+export default function Home() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [message, setMessage] = useState('')
+
+  const signUp = async () => {
+>>>>>>> 46292f91a013c847a92ed445bc6279c5f935df64
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
     })
+<<<<<<< HEAD
     // ↑ This sends a request from the browser → Supabase
     // Supabase handles:
     // - password hashing
@@ -74,12 +93,34 @@ export default function Page() {
       />
 
       {/* Password input field */}
+=======
+
+    if (error) {
+      setMessage(error.message)
+    } else {
+      setMessage(`User created: ${data.user?.id}`)
+    }
+  }
+
+  return (
+    <main style={{ padding: 40 }}>
+      <h1>Sign up</h1>
+
+      <input
+        placeholder="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <br /><br />
+
+>>>>>>> 46292f91a013c847a92ed445bc6279c5f935df64
       <input
         type="password"
         placeholder="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+<<<<<<< HEAD
 
       {/* Button that triggers the signup function */}
       <button onClick={signUp}>
@@ -87,6 +128,12 @@ export default function Page() {
       </button>
 
       {/* Feedback message shown to the user */}
+=======
+      <br /><br />
+
+      <button onClick={signUp}>Sign up</button>
+
+>>>>>>> 46292f91a013c847a92ed445bc6279c5f935df64
       <p>{message}</p>
     </main>
   )
